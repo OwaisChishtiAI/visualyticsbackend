@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https:	//ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- <script>
+
+fetch('http://localhost:5000/camera01')
+    .then(res => res.json())
+    .then((out) => {
+        console.log('Output: ', out.data[0]);
+}).catch(err => console.error(err));
+
+
+
+</script> -->
+</head>
+<body>
+
+
+	<h1>Visualytics AI</h1>
+
+	<div id="piechart"></div>
+	<div style="display: inline">
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		// Load google charts
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(drawChart);
+		
+		
+		  
+	// setInterval(function(){
+		function drawChart() {
+			// console.log("FUNCTION");
+			
+			let chart_data = [];
+		  chart_data.push(["Quarters", "No. of People"])
+		  fetch('http://localhost:5000/camera01_roi')
+				.then(res => res.json())
+				.then((out) => {
+					// console.log('Output: ', out.keys, out.values);
+				out.keys.forEach(element => {
+					chart_data.push([element])
+					// console.log(element);
+				});
+				var i = 1;
+				out.values.forEach(element => {
+					chart_data[i].push(element)
+					i = i + 1;
+					// console.log(element);
+				});
+				console.log(chart_data);
+				const textPieChart = document.getElementById('piechart')	
+		 
+		  var data = google.visualization.arrayToDataTable(chart_data);
+		
+		  // Optional; add a title and set the width and height of the chart
+		  var options = {'title':'Customers Availability Pie Chart', 'width':750, 'height':600};
+		
+		  // Display the chart inside the <div> element with id="piechart"
+		  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+		  chart.draw(data, options);
+			}).catch(err => console.error(err));
+			
+		}	
+		  setInterval(drawChart, 5000);
+		</script>
+		<!-- <img src="static/images/empty_shelf_annotated.jpg" alt="Quarters Image" width="1000px"> -->
+		<img src="../static/images/empty_shelf_annotated.jpg" alt="Quarters Image" width="1000px">
+		<!-- <img src="../static/images/dist.png" alt="Quarters Image" width="1000px">
+		<img src="../static/images/map.png" alt="Quarters Image" width="1000px">
+		<meta http-equiv="refresh" content="3" /> -->
+		</div>
+</body>
+</html>
